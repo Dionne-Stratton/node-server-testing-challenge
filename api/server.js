@@ -31,8 +31,8 @@ server.get("/characters/:id", async (req, res) => {
 
 server.post("/characters", async (req, res) => {
   // check that name isn't in db already, and if it is, send proper error
-  const newHobbit = await Characters.insert(req.body);
-  res.json(newHobbit);
+  const newCharacter = await Characters.insert(req.body);
+  res.json(newCharacter);
 });
 
 server.delete("/characters/:id", (req, res) => {

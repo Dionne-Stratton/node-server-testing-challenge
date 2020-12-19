@@ -11,7 +11,7 @@ beforeAll(async () => {
   await db.migrate.latest();
 });
 beforeEach(async () => {
-  await db("Characters").truncate();
+  await db("characters").truncate();
 });
 afterAll(async () => {
   await db.destroy();
@@ -27,11 +27,11 @@ describe("endpoints", () => {
       const res = await request(server).get("/characters");
       expect(res.body).toHaveLength(0);
     });
-    it("responds with Characters if Characters", async () => {
-      await db("Characters").insert(Ed);
+    it("responds with characters", async () => {
+      await db("characters").insert(Ed);
       let res = await request(server).get("/characters");
       expect(res.body).toHaveLength(1);
-      await db("Characters").insert(Hottie);
+      await db("characters").insert(Hottie);
       res = await request(server).get("/characters");
       expect(res.body).toHaveLength(2);
       expect(res.body[0]).toMatchObject(Ed);
@@ -39,8 +39,8 @@ describe("endpoints", () => {
     });
   });
   describe("[GET] /characters/:id", () => {
-    it("responds with the hobbit with the given id", async () => {
-      await db("Characters").insert(Hottie);
+    it("responds with the character with the given id", async () => {
+      await db("characters").insert(Hottie);
       let res = await request(server).get("/characters/1");
       expect(res.body).toMatchObject(Hottie);
     });
@@ -50,7 +50,7 @@ describe("endpoints", () => {
     });
   });
   describe("[POST] /characters", () => {
-    it("resturns the newly created hobbit", async () => {
+    it("resturns the newly created character", async () => {
       const res = await request(server).post("/characters").send(Hottie);
       expect(res.body.id).toBe(1);
       expect(res.body.first_name).toBe("Roy");
