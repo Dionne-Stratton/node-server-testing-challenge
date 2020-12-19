@@ -30,17 +30,23 @@ server.get("/characters/:id", async (req, res) => {
 });
 
 server.post("/characters", async (req, res) => {
-  // check that name isn't in db already, and if it is, send proper error
   const newCharacter = await Characters.insert(req.body);
   res.json(newCharacter);
 });
 
 server.delete("/characters/:id", (req, res) => {
-  res.end();
+  Characters.remove(req.params.id)
+    .then((character) => {
+      if (character !== 0) {
+        res.status(200).json(character);
+      } else {
+        res.status(404).json({ message: "not found" });
+      }
+    })
+    .catch(() => {
+      res.status(404).json({ message: "not found" });
+    });
 });
 
-server.put("/characters/:id", (req, res) => {
-  res.end();
-});
 
 module.exports = server;

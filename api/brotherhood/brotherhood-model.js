@@ -2,7 +2,8 @@ const db = require("../../data/dbConfig.js");
 
 module.exports = {
   insert,
-//   remove,
+  update,
+  remove,
   getAll,
   getById,
 };
@@ -20,6 +21,15 @@ async function insert(character) {
   return db("characters").where({ id }).first();
 }
 
-// function remove(id) {
-//   return null;
-// }
+async function update(id, changes) {
+    return db("actions")
+    .where("id", id)
+    .update(changes)
+    .then((count) => (count > 0 ? getAll(id) : null));
+}
+
+function remove(id) {
+  return db("actions").where("id", id).del();
+}
+
+
