@@ -22,14 +22,14 @@ async function insert(character) {
 }
 
 async function update(id, changes) {
-    return db("actions")
+    return db("characters")
     .where("id", id)
     .update(changes)
     .then((count) => (count > 0 ? getAll(id) : null));
 }
 
 function remove(id) {
-  return db("actions").where("id", id).del();
+  return db("characters").where("id", id).del();
 }
 
 
